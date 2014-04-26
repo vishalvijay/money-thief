@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.Moneythief" parent="@style/Theme.AppCompat.Light.DarkActionBar">
+        <item name="android:progressBarStyleHorizontal">@style/ProgressBarMoneythief</item>
+        <item name="android:listChoiceBackgroundIndicator">@drawable/moneythief_list_selector_holo_light</item>
+        <item name="android:activatedBackgroundIndicator">@drawable/moneythief_activated_background_holo_light</item>
+    </style>
+
+    <style name="ProgressBarMoneythief" parent="android:Widget.Holo.Light.ProgressBar.Horizontal">
+        <item name="android:progressDrawable">@drawable/moneythief_progress_horizontal_holo_light</item>
+        <item name="android:indeterminateDrawable">@drawable/moneythief_progress_indeterminate_horizontal_holo_light</item>
+    </style>
+
+</resources>

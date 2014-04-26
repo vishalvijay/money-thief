@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     File created by the Android Action Bar Style Generator
+
+     Copyright (C) 2011 The Android Open Source Project
+     Copyright (C) 2012 readyState Software Ltd
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+  
+          http://www.apache.org/licenses/LICENSE-2.0
+  
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <style name="Theme.Moneythief" parent="@style/Theme.AppCompat.Light.DarkActionBar">
+        <item name="actionBarItemBackground">@drawable/selectable_background_moneythief</item>
+        <item name="popupMenuStyle">@style/PopupMenu.Moneythief</item>
+        <item name="dropDownListViewStyle">@style/DropDownListView.Moneythief</item>
+        <item name="actionBarTabStyle">@style/ActionBarTabStyle.Moneythief</item>
+        <item name="actionDropDownStyle">@style/DropDownNav.Moneythief</item>
+        <item name="actionBarStyle">@style/ActionBar.Solid.Moneythief</item>
+        <item name="actionModeBackground">@drawable/cab_background_top_moneythief</item>
+        <item name="actionModeSplitBackground">@drawable/cab_background_bottom_moneythief</item>
+        <item name="actionModeCloseButtonStyle">@style/ActionButton.CloseMode.Moneythief</item>
+
+        <!-- Light.DarkActionBar specific -->
+        <item name="actionBarWidgetTheme">@style/Theme.Moneythief.Widget</item>
+        <item name="android:progressBarStyleHorizontal">@style/ProgressBarMoneythief</item>
+        <item name="android:listViewStyle">@style/ListViewMoneythief</item>
+        <item name="android:listViewWhiteStyle">@style/ListViewMoneythief.White</item>
+        <item name="android:spinnerItemStyle">@style/SpinnerItemMoneythief</item>
+    </style>
+
+    <style name="ActionBar.Solid.Moneythief" parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
+        <item name="background">@drawable/ab_solid_moneythief</item>
+        <item name="backgroundStacked">@drawable/ab_stacked_solid_moneythief</item>
+        <item name="backgroundSplit">@drawable/ab_bottom_solid_moneythief</item>
+        <item name="progressBarStyle">@style/ProgressBar.Moneythief</item>
+        <item name="subtitleTextStyle">@style/Theme.Moneythief.ActionBar.SubTitleTextStyle</item>
+    </style>
+
+    <style name="ActionBar.Transparent.Moneythief" parent="@style/Widget.AppCompat.ActionBar">
+        <item name="background">@drawable/ab_transparent_moneythief</item>
+        <item name="progressBarStyle">@style/ProgressBar.Moneythief</item>
+    </style>
+
+    <style name="PopupMenu.Moneythief" parent="@style/Widget.AppCompat.PopupMenu">
+        <item name="android:popupBackground">@drawable/menu_dropdown_panel_moneythief</item>
+    </style>
+
+    <style name="DropDownListView.Moneythief" parent="@style/Widget.AppCompat.ListView.DropDown">
+        <item name="android:listSelector">@drawable/selectable_background_moneythief</item>
+    </style>
+
+    <style name="ActionBarTabStyle.Moneythief" parent="@style/Widget.AppCompat.ActionBar.TabView">
+        <item name="android:background">@drawable/tab_indicator_ab_moneythief</item>
+    </style>
+
+    <style name="DropDownNav.Moneythief" parent="@style/Widget.AppCompat.Spinner.DropDown.ActionBar">
+        <item name="android:background">@drawable/spinner_background_ab_moneythief</item>
+        <item name="android:popupBackground">@drawable/menu_dropdown_panel_moneythief</item>
+        <item name="android:dropDownSelector">@drawable/selectable_background_moneythief</item>
+    </style>
+
+    <style name="ProgressBar.Moneythief" parent="@style/Widget.AppCompat.ProgressBar.Horizontal">
+        <item name="android:progressDrawable">@drawable/progress_horizontal_moneythief</item>
+    </style>
+
+    <style name="ActionButton.CloseMode.Moneythief" parent="@style/Widget.AppCompat.ActionButton.CloseMode">
+        <item name="android:background">@drawable/btn_cab_done_moneythief</item>
+    </style>
+
+    <!-- this style is only referenced in a Light.DarkActionBar based theme -->
+    <style name="Theme.Moneythief.Widget" parent="@style/Theme.AppCompat">
+        <item name="popupMenuStyle">@style/PopupMenu.Moneythief</item>
+        <item name="dropDownListViewStyle">@style/DropDownListView.Moneythief</item>
+    </style>
+
+    <style name="ProgressBarMoneythief" parent="android:Widget.ProgressBar.Horizontal">
+        <item name="android:progressDrawable">@drawable/moneythief_progress_horizontal_holo_light</item>
+        <item name="android:indeterminateDrawable">@drawable/moneythief_progress_indeterminate_horizontal_holo_light</item>
+        <item name="android:minHeight">16dip</item>
+        <item name="android:maxHeight">16dip</item>
+    </style>
+
+    <style name="ListViewMoneythief" parent="android:Widget.ListView">
+        <item name="android:listSelector">@drawable/moneythief_list_selector_holo_light</item>
+    </style>
+
+    <style name="ListViewMoneythief.White" parent="android:Widget.ListView.White">
+        <item name="android:listSelector">@drawable/moneythief_list_selector_holo_light</item>
+    </style>
+
+    <style name="SpinnerItemMoneythief" parent="android:TextAppearance.Widget.TextView.SpinnerItem">
+        <item name="android:textColor">#000000</item>
+    </style>
+
+    <style name="Theme.Moneythief.ActionBar.SubTitleTextStyle" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Subtitle">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+</resources>
