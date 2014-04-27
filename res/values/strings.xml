@@ -11,5 +11,9 @@
     <string name="refresh">Refresh</string>
     <string name="forward">Forward</string>
     <string name="downloading_started">Downloading started</string>
+    <string name="home">Home</string>
+    <string name="about_me">About me</string>
+    <string name="about">About</string>
+    <string name="author">Vyshakh Vijay</string>
 
 </resources>

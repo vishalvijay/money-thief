@@ -1,6 +1,9 @@
 package com.v4creations.moneythief;
 
+import java.util.ArrayList;
+
 import android.app.Activity;
+import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -16,8 +19,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
+
+import com.v4creations.moneythief.MenuListAdapter.NavMenuItem;
 
 public class NavigationDrawerFragment extends Fragment {
 	private NavigationDrawerCallbacks mCallbacks;
@@ -49,9 +53,20 @@ public class NavigationDrawerFragment extends Fragment {
 						selectItem(position);
 					}
 				});
-		mDrawerListView.setAdapter(new ArrayAdapter<String>(getActionBar()
-				.getThemedContext(), android.R.layout.simple_list_item_1,
-				new String[] { "Home", "Vishal", "Vyshakh", }));
+		Context context = getActionBar().getThemedContext();
+		ArrayList<NavMenuItem> navMenuItems = new ArrayList<NavMenuItem>();
+		NavMenuItem navMenuItem = new NavMenuItem(" "
+				+ context.getString(R.string.home),
+				R.drawable.ic_action_view_as_grid);
+		navMenuItems.add(navMenuItem);
+		navMenuItem = new NavMenuItem(" "
+				+ context.getString(R.string.about_me),
+				R.drawable.ic_action_person);
+		navMenuItems.add(navMenuItem);
+		navMenuItem = new NavMenuItem(" " + context.getString(R.string.about),
+				R.drawable.ic_action_about);
+		navMenuItems.add(navMenuItem);
+		mDrawerListView.setAdapter(new MenuListAdapter(context, navMenuItems));
 		return mDrawerListView;
 	}
 

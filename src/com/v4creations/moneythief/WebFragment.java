@@ -64,6 +64,7 @@ public class WebFragment extends Fragment {
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		setHasOptionsMenu(true);
+		initWebView();
 		if (savedInstanceState != null)
 			webView.restoreState(savedInstanceState);
 		else
@@ -87,7 +88,6 @@ public class WebFragment extends Fragment {
 				.findViewById(R.id.progressTextView);
 		hideLodingProgressBar();
 		webView = (WebView) rootView.findViewById(R.id.siteWebView);
-		initWebView();
 	}
 
 	@SuppressLint({ "SetJavaScriptEnabled", "JavascriptInterface" })
