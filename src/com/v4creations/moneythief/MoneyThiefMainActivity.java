@@ -11,6 +11,7 @@ public class MoneyThiefMainActivity extends ActionBarActivity implements
 		NavigationDrawerFragment.NavigationDrawerCallbacks {
 
 	private NavigationDrawerFragment mNavigationDrawerFragment;
+	private WebFragment webFragment;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -25,14 +26,36 @@ public class MoneyThiefMainActivity extends ActionBarActivity implements
 
 	private void initWebFragment(Bundle savedInstanceState) {
 		if (savedInstanceState == null) {
+			webFragment = new WebFragment();
 			FragmentManager fragmentManager = getSupportFragmentManager();
 			fragmentManager.beginTransaction()
-					.replace(R.id.container, new WebFragment()).commit();
+					.replace(R.id.container, webFragment).commit();
 		}
 	}
 
 	@Override
 	public void onNavigationDrawerItemSelected(int position) {
+		switch (position) {
+		case 0:
+			webFragment.loadHome();
+			break;
+		case 1:
+			showAboutMe();
+			break;
+		case 2:
+			showAbout();
+			break;
+		}
+	}
+
+	private void showAbout() {
+		// TODO Auto-generated method stub
+
+	}
+
+	private void showAboutMe() {
+		// TODO Auto-generated method stub
+
 	}
 
 	public void restoreActionBar() {

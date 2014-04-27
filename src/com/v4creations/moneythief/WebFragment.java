@@ -224,4 +224,11 @@ public class WebFragment extends Fragment {
 		activity.getSupportActionBar().setSubtitle(subTitle);
 		activity.supportInvalidateOptionsMenu();
 	}
+
+	public void loadHome() {
+		if (!isAdded())
+			return;
+		currentUrl = Constance.WEB_URL;
+		webView.loadUrl(currentUrl);
+	}
 }
