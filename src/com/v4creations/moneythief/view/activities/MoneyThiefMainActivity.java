@@ -18,10 +18,16 @@ import com.v4creations.moneythief.view.fragments.WebFragment;
 public class MoneyThiefMainActivity extends ActionBarActivity implements
 		NavigationDrawerFragment.NavigationDrawerCallbacks {
 
+	// private static final String STATE_WEB_FRAGMENT = "web_fragament";
+	// private static final String STATE_ABOUT_ME_FRAGMENT =
+	// "about_me_fragament";
+	// private static final String STATE_ABOUT_FRAGMENT = "about_fragament";
+
 	private NavigationDrawerFragment mNavigationDrawerFragment;
 	private WebFragment webFragment;
-	private AboutMeFragment aboutMeFragment;
-	private AboutFragment aboutFragment;
+
+	// private AboutMeFragment aboutMeFragment;
+	// private AboutFragment aboutFragment;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -37,11 +43,9 @@ public class MoneyThiefMainActivity extends ActionBarActivity implements
 	private void initWebFragment(Bundle savedInstanceState) {
 		if (savedInstanceState == null) {
 			webFragment = new WebFragment();
-			aboutMeFragment = new AboutMeFragment();
-			aboutFragment = new AboutFragment();
 			FragmentManager fragmentManager = getSupportFragmentManager();
-			fragmentManager.beginTransaction()
-					.replace(R.id.container, webFragment).commit();
+			fragmentManager.beginTransaction().add(R.id.container, webFragment)
+					.commit();
 		}
 	}
 
@@ -52,10 +56,10 @@ public class MoneyThiefMainActivity extends ActionBarActivity implements
 			webFragment.loadHome();
 			break;
 		case 1:
-			showNextFragment(aboutMeFragment);
+			showNextFragment(new AboutMeFragment());
 			break;
 		case 2:
-			showNextFragment(aboutFragment);
+			showNextFragment(new AboutFragment());
 			break;
 		}
 	}
@@ -102,4 +106,5 @@ public class MoneyThiefMainActivity extends ActionBarActivity implements
 		super.onStop();
 		GoogleAnalyticsManager.stopGoogleAnalyticsForActivity(this);
 	}
+
 }

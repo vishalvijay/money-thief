@@ -19,6 +19,7 @@
         android:layout_height="match_parent"
         android:autoLink="all"
         android:background="@color/transparent_black"
+        android:gravity="bottom"
         android:padding="@dimen/common_padding"
         android:text="@string/about_author"
         android:textAppearance="?android:attr/textAppearanceMedium"

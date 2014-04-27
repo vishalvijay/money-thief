@@ -118,7 +118,7 @@ public class WebFragment extends Fragment {
 				isRefresh = false;
 				isBackEnabled = webView.canGoBack();
 				isForwardEnabled = webView.canGoForward();
-				changeSubTitle(getString(R.string.loading));
+				// changeSubTitle(getString(R.string.loading));
 				showLoadingProgressBar();
 			}
 
