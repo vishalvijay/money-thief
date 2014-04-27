@@ -1,10 +1,8 @@
 package com.v4creations.moneythief;
 
 import android.app.Activity;
-import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
@@ -22,8 +20,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 public class NavigationDrawerFragment extends Fragment {
-	private static final String STATE_SELECTED_POSITION = "selected_navigation_drawer_position";
-	private static final String PREF_USER_LEARNED_DRAWER = "navigation_drawer_learned";
 	private NavigationDrawerCallbacks mCallbacks;
 	private ActionBarDrawerToggle mDrawerToggle;
 
@@ -31,25 +27,7 @@ public class NavigationDrawerFragment extends Fragment {
 	private ListView mDrawerListView;
 	private View mFragmentContainerView;
 
-	private int mCurrentSelectedPosition = 0;
-	private boolean mFromSavedInstanceState;
-	private boolean mUserLearnedDrawer;
-
 	public NavigationDrawerFragment() {
-	}
-
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		SharedPreferences sp = PreferenceManager
-				.getDefaultSharedPreferences(getActivity());
-		mUserLearnedDrawer = sp.getBoolean(PREF_USER_LEARNED_DRAWER, false);
-		if (savedInstanceState != null) {
-			mCurrentSelectedPosition = savedInstanceState
-					.getInt(STATE_SELECTED_POSITION);
-			mFromSavedInstanceState = true;
-		}
-		selectItem(mCurrentSelectedPosition);
 	}
 
 	@Override
@@ -74,7 +52,6 @@ public class NavigationDrawerFragment extends Fragment {
 		mDrawerListView.setAdapter(new ArrayAdapter<String>(getActionBar()
 				.getThemedContext(), android.R.layout.simple_list_item_1,
 				new String[] { "Home", "Vishal", "Vyshakh", }));
-		mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
 		return mDrawerListView;
 	}
 
@@ -110,19 +87,9 @@ public class NavigationDrawerFragment extends Fragment {
 				if (!isAdded()) {
 					return;
 				}
-				if (!mUserLearnedDrawer) {
-					mUserLearnedDrawer = true;
-					SharedPreferences sp = PreferenceManager
-							.getDefaultSharedPreferences(getActivity());
-					sp.edit().putBoolean(PREF_USER_LEARNED_DRAWER, true)
-							.commit();
-				}
 				getActivity().supportInvalidateOptionsMenu();
 			}
 		};
-		if (!mUserLearnedDrawer && !mFromSavedInstanceState) {
-			mDrawerLayout.openDrawer(mFragmentContainerView);
-		}
 		mDrawerLayout.post(new Runnable() {
 			@Override
 			public void run() {
@@ -133,10 +100,6 @@ public class NavigationDrawerFragment extends Fragment {
 	}
 
 	private void selectItem(int position) {
-		mCurrentSelectedPosition = position;
-		if (mDrawerListView != null) {
-			mDrawerListView.setItemChecked(position, true);
-		}
 		if (mDrawerLayout != null) {
 			mDrawerLayout.closeDrawer(mFragmentContainerView);
 		}
@@ -163,20 +126,8 @@ public class NavigationDrawerFragment extends Fragment {
 	}
 
 	@Override
-	public void onSaveInstanceState(Bundle outState) {
-		super.onSaveInstanceState(outState);
-		outState.putInt(STATE_SELECTED_POSITION, mCurrentSelectedPosition);
-	}
-
-	@Override
-	public void onConfigurationChanged(Configuration newConfig) {
-		super.onConfigurationChanged(newConfig);
-		mDrawerToggle.onConfigurationChanged(newConfig);
-	}
-
-	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		if (mDrawerLayout != null && isDrawerOpen()) {
+		if (isDrawerOpen()) {
 			inflater.inflate(R.menu.global, menu);
 			showGlobalContextActionBar();
 		}
@@ -189,6 +140,12 @@ public class NavigationDrawerFragment extends Fragment {
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+
+	@Override
+	public void onConfigurationChanged(Configuration newConfig) {
+		super.onConfigurationChanged(newConfig);
+		mDrawerToggle.onConfigurationChanged(newConfig);
 	}
 
 	private void showGlobalContextActionBar() {

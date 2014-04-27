@@ -3,4 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.v4creations.moneythief.MoneyThiefMainActivity" >
 
+    <item
+        android:id="@+id/menu_back"
+        android:icon="@drawable/ic_action_previous_item"
+        android:title="@string/back"
+        app:showAsAction="always"/>
+
 </menu>

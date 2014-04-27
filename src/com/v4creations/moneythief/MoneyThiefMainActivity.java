@@ -20,13 +20,15 @@ public class MoneyThiefMainActivity extends ActionBarActivity implements
 				.findFragmentById(R.id.navigation_drawer);
 		mNavigationDrawerFragment.setUp(R.id.navigation_drawer,
 				(DrawerLayout) findViewById(R.id.drawer_layout));
-		initWebFragment();
+		initWebFragment(savedInstanceState);
 	}
 
-	private void initWebFragment() {
-		FragmentManager fragmentManager = getSupportFragmentManager();
-		fragmentManager.beginTransaction()
-				.replace(R.id.container, new WebFragment()).commit();
+	private void initWebFragment(Bundle savedInstanceState) {
+		if (savedInstanceState == null) {
+			FragmentManager fragmentManager = getSupportFragmentManager();
+			fragmentManager.beginTransaction()
+					.replace(R.id.container, new WebFragment()).commit();
+		}
 	}
 
 	@Override

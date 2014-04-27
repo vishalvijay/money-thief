@@ -21,8 +21,13 @@ import android.widget.TextView;
 
 public class WebFragment extends Fragment {
 
+	public static final String STATE_CURRENT_URL = "current_url";
+	public static final String STATE_IS_FORWARD = "is_forward_enabled";
+	public static final String STATE_IS_BACK = "is_back_enabled";
+	public static final String STATE_IS_REFRESH = "is_refresh";
+
 	String TAG = "WebFragment";
-	private WebView mWebView;
+	private WebView webView;
 	private boolean isForwardEnabled = false, isBackEnabled = true,
 			isRefresh = true;
 	private ProgressBar loadingProgressBar;
@@ -36,7 +41,6 @@ public class WebFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		currentUrl = Constance.WEB_URL;
 		View rootView = inflater.inflate(R.layout.fragment_web, container,
 				false);
 		initViews(rootView);
@@ -47,13 +51,33 @@ public class WebFragment extends Fragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setHasOptionsMenu(true);
+		currentUrl = Constance.WEB_URL;
+		if (savedInstanceState != null) {
+			currentUrl = savedInstanceState.getString(STATE_CURRENT_URL);
+			isForwardEnabled = savedInstanceState.getBoolean(STATE_IS_FORWARD);
+			isBackEnabled = savedInstanceState.getBoolean(STATE_IS_BACK);
+			isRefresh = savedInstanceState.getBoolean(STATE_IS_REFRESH);
+		}
 	}
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		mWebView.loadUrl(currentUrl);
+		setHasOptionsMenu(true);
+		if (savedInstanceState != null)
+			webView.restoreState(savedInstanceState);
+		else
+			webView.loadUrl(currentUrl);
+	}
+
+	@Override
+	public void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+		outState.putString(STATE_CURRENT_URL, currentUrl);
+		outState.putBoolean(STATE_IS_FORWARD, isForwardEnabled);
+		outState.putBoolean(STATE_IS_BACK, isBackEnabled);
+		outState.putBoolean(STATE_IS_REFRESH, isRefresh);
+		webView.saveState(outState);
 	}
 
 	private void initViews(View rootView) {
@@ -62,22 +86,22 @@ public class WebFragment extends Fragment {
 		progressTextView = (TextView) rootView
 				.findViewById(R.id.progressTextView);
 		hideLodingProgressBar();
-		mWebView = (WebView) rootView.findViewById(R.id.siteWebView);
+		webView = (WebView) rootView.findViewById(R.id.siteWebView);
 		initWebView();
 	}
 
 	@SuppressLint({ "SetJavaScriptEnabled", "JavascriptInterface" })
 	private void initWebView() {
-		mWebView.getSettings().setJavaScriptEnabled(true);
-		mWebView.addJavascriptInterface(new JavaScriptInterface(), "HTMLOUT");
+		webView.getSettings().setJavaScriptEnabled(true);
+		webView.addJavascriptInterface(new JavaScriptInterface(), "HTMLOUT");
 
-		mWebView.setWebChromeClient(new WebChromeClient() {
+		webView.setWebChromeClient(new WebChromeClient() {
 			public void onProgressChanged(WebView view, int progress) {
 				loadingProgressBar.setProgress(progress);
 			}
 		});
 
-		mWebView.setWebViewClient(new WebViewClient() {
+		webView.setWebViewClient(new WebViewClient() {
 			public void onReceivedError(WebView view, int errorCode,
 					String description, String failingUrl) {
 				Utils.showInfoToast(getActivity(), description);
@@ -87,8 +111,8 @@ public class WebFragment extends Fragment {
 			@Override
 			public void onPageStarted(WebView view, String url, Bitmap favicon) {
 				isRefresh = false;
-				isBackEnabled = mWebView.canGoBack();
-				isForwardEnabled = mWebView.canGoForward();
+				isBackEnabled = webView.canGoBack();
+				isForwardEnabled = webView.canGoForward();
 				changeSubTitle(getString(R.string.loading));
 				showLoadingProgressBar();
 			}
@@ -96,15 +120,15 @@ public class WebFragment extends Fragment {
 			@Override
 			public void onPageFinished(WebView view, String url) {
 				currentUrl = url;
-				mWebView.loadUrl("javascript:window.HTMLOUT.showHTML('<head>'+document.getElementsByTagName('html')[0].innerHTML+'</head>');");
+				webView.loadUrl("javascript:window.HTMLOUT.showHTML('<head>'+document.getElementsByTagName('html')[0].innerHTML+'</head>');");
 				isRefresh = true;
-				isBackEnabled = mWebView.canGoBack();
-				isForwardEnabled = mWebView.canGoForward();
+				isBackEnabled = webView.canGoBack();
+				isForwardEnabled = webView.canGoForward();
 				changeSubTitle(null);
 				hideLodingProgressBar();
 			}
 		});
-		mWebView.setDownloadListener(new DownloadListener() {
+		webView.setDownloadListener(new DownloadListener() {
 			public void onDownloadStart(String url, String userAgent,
 					String contentDisposition, String mimetype,
 					long contentLength) {
@@ -123,7 +147,8 @@ public class WebFragment extends Fragment {
 
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		inflater.inflate(R.menu.web_menu, menu);
+		if (!activity.getNavigationDrawerFragment().isDrawerOpen())
+			inflater.inflate(R.menu.web_menu, menu);
 		super.onCreateOptionsMenu(menu, inflater);
 	}
 
@@ -162,18 +187,18 @@ public class WebFragment extends Fragment {
 		super.onOptionsItemSelected(item);
 		switch (item.getItemId()) {
 		case R.id.menu_back:
-			mWebView.goBack();
+			webView.goBack();
 			return true;
 		case R.id.menu_forward:
-			mWebView.goForward();
+			webView.goForward();
 			return true;
 		case R.id.menu_refresh:
 			if (isRefresh)
-				mWebView.reload();
+				webView.reload();
 			else {
 				isRefresh = true;
 				activity.supportInvalidateOptionsMenu();
-				mWebView.stopLoading();
+				webView.stopLoading();
 			}
 			return true;
 		}
