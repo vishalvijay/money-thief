@@ -1,4 +1,4 @@
-package com.v4creations.moneythief;
+package com.v4creations.moneythief.view.fragments;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -18,6 +18,11 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import com.v4creations.moneythief.R;
+import com.v4creations.moneythief.utils.Constance;
+import com.v4creations.moneythief.utils.Utils;
+import com.v4creations.moneythief.view.activities.MoneyThiefMainActivity;
 
 public class WebFragment extends Fragment {
 

@@ -1,4 +1,4 @@
-package com.v4creations.moneythief;
+package com.v4creations.moneythief.controllers.adapters;
 
 import java.util.List;
 
@@ -8,7 +8,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import com.v4creations.moneythief.MenuListAdapter.NavMenuItem;
+import com.v4creations.moneythief.R;
+import com.v4creations.moneythief.controllers.adapters.MenuListAdapter.NavMenuItem;
 
 public class MenuListAdapter extends ArrayAdapter<NavMenuItem> {
 

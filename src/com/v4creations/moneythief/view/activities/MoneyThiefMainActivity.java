@@ -1,17 +1,27 @@
-package com.v4creations.moneythief;
+package com.v4creations.moneythief.view.activities;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 
+import com.v4creations.moneythief.R;
+import com.v4creations.moneythief.utils.GoogleAnalyticsManager;
+import com.v4creations.moneythief.view.fragments.AboutFragment;
+import com.v4creations.moneythief.view.fragments.AboutMeFragment;
+import com.v4creations.moneythief.view.fragments.NavigationDrawerFragment;
+import com.v4creations.moneythief.view.fragments.WebFragment;
+
 public class MoneyThiefMainActivity extends ActionBarActivity implements
 		NavigationDrawerFragment.NavigationDrawerCallbacks {
 
 	private NavigationDrawerFragment mNavigationDrawerFragment;
 	private WebFragment webFragment;
+	private AboutMeFragment aboutMeFragment;
+	private AboutFragment aboutFragment;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +37,8 @@ public class MoneyThiefMainActivity extends ActionBarActivity implements
 	private void initWebFragment(Bundle savedInstanceState) {
 		if (savedInstanceState == null) {
 			webFragment = new WebFragment();
+			aboutMeFragment = new AboutMeFragment();
+			aboutFragment = new AboutFragment();
 			FragmentManager fragmentManager = getSupportFragmentManager();
 			fragmentManager.beginTransaction()
 					.replace(R.id.container, webFragment).commit();
@@ -40,22 +52,23 @@ public class MoneyThiefMainActivity extends ActionBarActivity implements
 			webFragment.loadHome();
 			break;
 		case 1:
-			showAboutMe();
+			showNextFragment(aboutMeFragment);
 			break;
 		case 2:
-			showAbout();
+			showNextFragment(aboutFragment);
 			break;
 		}
 	}
 
-	private void showAbout() {
-		// TODO Auto-generated method stub
-
-	}
-
-	private void showAboutMe() {
-		// TODO Auto-generated method stub
-
+	private void showNextFragment(Fragment fragment) {
+		FragmentManager fragmentManager = getSupportFragmentManager();
+		fragmentManager
+				.beginTransaction()
+				.setCustomAnimations(R.anim.slide_in_left,
+						R.anim.slide_out_right, R.anim.slide_in_right,
+						R.anim.slide_out_left)
+				.replace(R.id.container, fragment).addToBackStack(null)
+				.commit();
 	}
 
 	public void restoreActionBar() {
@@ -76,5 +89,17 @@ public class MoneyThiefMainActivity extends ActionBarActivity implements
 
 	public NavigationDrawerFragment getNavigationDrawerFragment() {
 		return mNavigationDrawerFragment;
+	}
+
+	@Override
+	protected void onStart() {
+		super.onStart();
+		GoogleAnalyticsManager.startGoogleAnalyticsForActivity(this);
+	}
+
+	@Override
+	protected void onStop() {
+		super.onStop();
+		GoogleAnalyticsManager.stopGoogleAnalyticsForActivity(this);
 	}
 }

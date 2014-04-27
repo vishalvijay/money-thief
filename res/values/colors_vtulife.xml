@@ -10,5 +10,6 @@
     <color name="solid_white">#eeeeee</color>
     <color name="white_frame">#f5f6f7</color>
     <color name="navmenu_bg">#345c45</color>
+    <color name="transparent_black">#80000000</color>
 
 </resources>

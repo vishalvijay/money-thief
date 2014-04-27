@@ -1,4 +1,4 @@
-package com.v4creations.moneythief;
+package com.v4creations.moneythief.view.fragments;
 
 import java.util.ArrayList;
 
@@ -8,6 +8,7 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -21,7 +22,11 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.v4creations.moneythief.MenuListAdapter.NavMenuItem;
+import com.v4creations.moneythief.R;
+import com.v4creations.moneythief.controllers.adapters.MenuListAdapter;
+import com.v4creations.moneythief.controllers.adapters.MenuListAdapter.NavMenuItem;
+import com.v4creations.moneythief.utils.SystemFeatureChecker;
+import com.v4creations.moneythief.view.activities.MoneyThiefMainActivity;
 
 public class NavigationDrawerFragment extends Fragment {
 	private NavigationDrawerCallbacks mCallbacks;
@@ -30,6 +35,7 @@ public class NavigationDrawerFragment extends Fragment {
 	private DrawerLayout mDrawerLayout;
 	private ListView mDrawerListView;
 	private View mFragmentContainerView;
+	private MoneyThiefMainActivity activity;
 
 	public NavigationDrawerFragment() {
 	}
@@ -43,6 +49,7 @@ public class NavigationDrawerFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
+		activity = (MoneyThiefMainActivity) getActivity();
 		mDrawerListView = (ListView) inflater.inflate(
 				R.layout.fragment_navigation_drawer, container, false);
 		mDrawerListView
@@ -112,6 +119,13 @@ public class NavigationDrawerFragment extends Fragment {
 			}
 		});
 		mDrawerLayout.setDrawerListener(mDrawerToggle);
+		activity.getSupportFragmentManager().addOnBackStackChangedListener(
+				new FragmentManager.OnBackStackChangedListener() {
+					@Override
+					public void onBackStackChanged() {
+						setActionBarArrowDependingOnFragmentsBackStack();
+					}
+				});
 	}
 
 	private void selectItem(int position) {
@@ -151,7 +165,17 @@ public class NavigationDrawerFragment extends Fragment {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		if (mDrawerToggle.onOptionsItemSelected(item)) {
+		if (mDrawerToggle.isDrawerIndicatorEnabled()
+				&& mDrawerToggle.onOptionsItemSelected(item)) {
+			return true;
+		} else if (item.getItemId() == android.R.id.home
+				&& activity.getSupportFragmentManager().popBackStackImmediate()) {
+			return true;
+		} else if (item.getItemId() == R.id.menu_rate) {
+			SystemFeatureChecker.rateAppOnPlayStore(activity);
+			return true;
+		} else if (item.getItemId() == R.id.menu_feedback) {
+			SystemFeatureChecker.sendFeedback(activity);
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
@@ -171,10 +195,17 @@ public class NavigationDrawerFragment extends Fragment {
 	}
 
 	private ActionBar getActionBar() {
-		return ((ActionBarActivity) getActivity()).getSupportActionBar();
+		return activity.getSupportActionBar();
+	}
+
+	private void setActionBarArrowDependingOnFragmentsBackStack() {
+		int backStackEntryCount = ((ActionBarActivity) getActivity())
+				.getSupportFragmentManager().getBackStackEntryCount();
+		mDrawerToggle.setDrawerIndicatorEnabled(backStackEntryCount == 0);
 	}
 
 	public static interface NavigationDrawerCallbacks {
 		void onNavigationDrawerItemSelected(int position);
 	}
+
 }

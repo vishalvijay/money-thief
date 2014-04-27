@@ -1,9 +1,11 @@
-package com.v4creations.moneythief;
+package com.v4creations.moneythief.utils;
 
 import android.content.Context;
 import android.widget.Toast;
 
 public class Utils {
+	public static final boolean isProduction = true;
+
 	public static void showErrorToast(Context context, String msg) {
 		Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
 	}
